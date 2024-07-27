@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'home_screen.dart';
+import 'info_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,8 +15,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         useMaterial3: false,
+        primarySwatch: Colors.red
       ),
-      home: const HomeScreen(),
+      home: const InfoScreen(),
     );
   }
 }
