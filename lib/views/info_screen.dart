@@ -13,11 +13,14 @@ class InfoScreen extends StatefulWidget {
 }
 
 class _InfoScreenState extends State<InfoScreen> {
+  // Define a MethodChannel for communicating with the native platform
   static const platform =
       MethodChannel('com.integration.flutter_integration/device');
 
   Map<String, String> _info = {};
 
+  /// Calls the native method to get device information.
+  /// Updates the _info map with the retrieved data or an error message.
   Future<void> _getDeviceInfo() async {
     Map<String, String> info;
     try {
@@ -33,6 +36,8 @@ class _InfoScreenState extends State<InfoScreen> {
     });
   }
 
+  /// Calls the native method to get video information.
+  /// Updates the _info map with the retrieved data or an error message.
   Future<void> _getVideoInfo() async {
     Map<String, String> info;
     try {

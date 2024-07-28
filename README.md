@@ -1,16 +1,22 @@
-# flutter_integration
+# Native Integration Demo
 
-A new Flutter project.
+## Overview
 
-## Getting Started
+This Flutter application demonstrates the integration of Flutter with native Android code (Kotlin). The app consists of two buttons: "Get Device Info" and "Get Video Info." When the buttons are pressed, the app retrieves device and video information from native code using MethodChannels.
 
-This project is a starting point for a Flutter application.
+## Implementation Details
 
-A few resources to get you started if this is your first Flutter project:
+### Flutter
+- `main.dart`: Main entry point of the Flutter app.
+- `info_screen.dart`: Main UI screen that includes two buttons and a text area to display information.
+- `info_button.dart`: Custom widget for the buttons.
+- `info_list.dart`: Custom widget to display the information in a structured manner.
+- `styles.dart`: Defines the styles used in the app.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+### Native Android (Kotlin)
+- `MainActivity.kt`: Contains methods to retrieve device and video information.
+    - `getDeviceInfo()`: Uses the `Build` class to get device information.
+    - `getVideoInfo()`: Uses `MediaMetadataRetriever`, `MediaExtractor`, and `MediaCodecList` to get video information, including the codec.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Output
+![Output Screen](images/screen_output.png)
