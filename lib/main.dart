@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_integration/common/styles.dart';
 
-import 'info_screen.dart';
+import 'views/info_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,10 +14,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        useMaterial3: false,
-        primarySwatch: Colors.red
-      ),
+      theme: appTheme,
       home: const InfoScreen(),
     );
   }

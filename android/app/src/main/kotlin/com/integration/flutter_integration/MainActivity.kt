@@ -33,40 +33,48 @@ class MainActivity : FlutterActivity() {
         }
     }
 
-    private fun getDeviceInfo(): String {
-        return """
-            Device: ${Build.DEVICE}
-            Model: ${Build.MODEL}
-            Manufacturer: ${Build.MANUFACTURER}
-            OS Version: ${Build.VERSION.RELEASE}
-            SDK Version: ${Build.VERSION.SDK_INT}
-            Board: ${Build.BOARD}
-            Brand: ${Build.BRAND}
-            Display: ${Build.DISPLAY}
-            """.trimIndent()
+    private fun getDeviceInfo(): Map<String, String> {
+        return mapOf(
+            "Device" to Build.DEVICE,
+            "Product" to Build.PRODUCT,
+            "Model" to Build.MODEL,
+            "Manufacturer" to Build.MANUFACTURER,
+            "OS Version" to Build.VERSION.RELEASE,
+            "SDK Version" to Build.VERSION.SDK_INT.toString(),
+            "Board" to Build.BOARD,
+            "Brand" to Build.BRAND,
+            "Hardware" to Build.HARDWARE,
+            "User" to Build.USER,
+            "Display" to Build.DISPLAY
+        )
     }
 
-    private fun getVideoInfo(): String {
+    private fun getVideoInfo(): Map<String, String> {
         val retriever = MediaMetadataRetriever()
-
-        // Path to sample_video.mp4 inside raw directory
         val videoUri = Uri.parse("android.resource://" + packageName + "/" + R.raw.sample_video)
         retriever.setDataSource(applicationContext, videoUri)
 
         val durationMs =
             retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)?.toLongOrNull()
                 ?: 0L
-        val durationSeconds = durationMs / 1000
+        val durationMinutes = durationMs / 60000
+        val durationSeconds = (durationMs % 60000) / 1000
         val width = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_WIDTH)
         val height = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_HEIGHT)
         val bitrate = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_BITRATE)
+        val mimeType = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_MIMETYPE)
+        val videoRotation =
+            retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_ROTATION)
 
         retriever.release()
 
-        return """
-            Duration: $durationSeconds seconds
-            Resolution: ${width}x$height
-            Bitrate: $bitrate bps
-            """.trimIndent()
+        return mapOf(
+            "Duration" to "${durationMinutes}m ${durationSeconds}s",
+            "Resolution" to "${width}x$height",
+            "Bitrate" to "$bitrate bps",
+            "MIME Type" to "$mimeType",
+            "Video Rotation" to "$videoRotation",
+            "Saved Path" to videoUri.toString(),
+        )
     }
 }
