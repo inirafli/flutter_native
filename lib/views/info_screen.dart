@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'dart:developer' as developer;
 
 import '../common/styles.dart';
 import '../widgets/info_button.dart';
@@ -22,13 +23,16 @@ class _InfoScreenState extends State<InfoScreen> {
   /// Calls the native method to get device information.
   /// Updates the _info map with the retrieved data or an error message.
   Future<void> _getDeviceInfo() async {
+    developer.log('Invoking getDeviceInfo', name: 'InfoScreen');
     Map<String, String> info;
     try {
       final result =
           await platform.invokeMethod<Map<dynamic, dynamic>>('getDeviceInfo');
       info = Map<String, String>.from(result!);
+      developer.log('Device Info: $info', name: 'InfoScreen');
     } on PlatformException catch (e) {
-      info = {'Error': "Failed to get device info: '${e.message}'."};
+      info = {'Error': "Failed to get device info."};
+      developer.log('Error retrieving device info: ${e.message}', name: 'InfoScreen', error: e);
     }
 
     setState(() {
@@ -39,13 +43,16 @@ class _InfoScreenState extends State<InfoScreen> {
   /// Calls the native method to get video information.
   /// Updates the _info map with the retrieved data or an error message.
   Future<void> _getVideoInfo() async {
+    developer.log('Invoking getVideoInfo', name: 'InfoScreen');
     Map<String, String> info;
     try {
       final result =
           await platform.invokeMethod<Map<dynamic, dynamic>>('getVideoInfo');
       info = Map<String, String>.from(result!);
+      developer.log('Video Info: $info', name: 'InfoScreen');
     } on PlatformException catch (e) {
-      info = {'Error': "Failed to get video info: '${e.message}'."};
+      info = {'Error': "Failed to get video info."};
+      developer.log('Error retrieving video info: ${e.message}', name: 'InfoScreen', error: e);
     }
 
     setState(() {

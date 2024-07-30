@@ -6,6 +6,7 @@ import android.media.MediaFormat
 import android.media.MediaMetadataRetriever
 import android.net.Uri
 import android.os.Build
+import android.util.Log
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
@@ -24,16 +25,23 @@ class MainActivity : FlutterActivity() {
         ).setMethodCallHandler { call, result ->
             when (call.method) {
                 "getDeviceInfo" -> {
+                    Log.d("MainActivity", "getDeviceInfo called")
                     val deviceInfo = getDeviceInfo()
+                    Log.d("MainActivity", "Device Info: $deviceInfo")
                     result.success(deviceInfo)
                 }
 
                 "getVideoInfo" -> {
+                    Log.d("MainActivity", "getVideoInfo called")
                     val videoInfo = getVideoInfo()
+                    Log.d("MainActivity", "Video Info: $videoInfo")
                     result.success(videoInfo)
                 }
 
-                else -> result.notImplemented()
+                else -> {
+                    Log.d("MainActivity", "Method not implemented: ${call.method}")
+                    result.notImplemented()
+                }
             }
         }
     }
@@ -117,7 +125,7 @@ class MainActivity : FlutterActivity() {
                 }
             }
         } catch (e: IOException) {
-            e.printStackTrace()
+            Log.e("MainActivity", "Error extracting codec info", e)
         } finally {
             extractor.release()
         }
